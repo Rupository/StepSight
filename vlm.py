@@ -6,7 +6,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 processor = AutoProcessor.from_pretrained("HuggingFaceTB/SmolVLM-256M-Instruct")
 model = AutoModelForImageTextToText.from_pretrained("HuggingFaceTB/SmolVLM-256M-Instruct",
-                                                dtype=torch.bfloat16,
+                                                dtype=torch.float32,
                                                 _attn_implementation="flash_attention_2" if DEVICE == "cuda" else "eager").to(DEVICE)
 
 
@@ -19,13 +19,12 @@ def get_desc():
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": "The Previous Image:"},
+                {"type": "text", "text": "This image shows the previous environment the user was in."},
                 {"type": "image"},
-                {"type": "text", "text": "The Current Image:"},
+                {"type": "text", "text": "This image shows the current environment the user is in."},
                 {"type": "image"},
-                {"type": "text", "text": "Describe the surroundings in the current image to a visually impaired person, "
-                "in at most two sentences. If the images do not differ in terms of the environment, entities and events "
-                "taking place, print the string: 'null'"},
+                {"type": "text", "text": "Describe the current environment in one sentence. "
+                "If the current environment is similar to the previous environment, DO NOT describe the current environment."},
             ] 
         },
     ]
@@ -38,12 +37,6 @@ def get_desc():
     generated_texts = processor.batch_decode(
         generated_ids,
         skip_special_tokens=True,
-        skip_prompt = True,
     )
 
-    print(generated_texts[0])
-
-    return generated_texts[0]
-
-
-get_desc()
+    return str(generated_texts[0]).partition('Assistant:')[2]

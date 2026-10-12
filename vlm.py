@@ -17,8 +17,7 @@ messages = [
             {"type": "image", "url": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/bee.jpg"},
             {"type": "text", "text": "This is the current image."},
             {"type": "image", "url": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/0052a70beed5bf71b92610a43a52df6d286cd5f3/diffusers/rabbit.jpg"},
-            {"type": "text", "text": "If the previous image is blank, describe the current image. If there has been a change in the environment or in the entities between the previous and current image, describe the current image. If there is no significant change, print the string 'NO_CHANGE'"},
-        ]
+        ] 
     },
 ]
 

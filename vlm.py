@@ -1,16 +1,23 @@
-from transformers import AutoProcessor, AutoModelForImageTextToText
+from transformers import AutoProcessor, AutoModelForVision2Seq
+from PIL import Image
 import torch
 
-processor = AutoProcessor.from_pretrained(model_path)
-model = AutoModelForImageTextToText.from_pretrained(
-    model_path,
-    torch_dtype=torch.bfloat16,
-    _attn_implementation="flash_attention_2"
-).to("cuda")
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+with open("vlm_prompt.md", "r") as file:
+    vlm_prompt = file.read()
+
+processor = AutoProcessor.from_pretrained("HuggingFaceTB/SmolVLM-500M-Instruct")
+model = AutoModelForVision2Seq.from_pretrained("HuggingFaceTB/SmolVLM-500M-Instruct",
+                                                torch_dtype=torch.bfloat16,
+                                                _attn_implementation="flash_attention_2" if DEVICE == "cuda" else "eager").to(DEVICE)
 
 messages = [
     {
-        "role": "system", "content": system_prompt},
+        "role": "system", 
+        "content": vlm_prompt
+    },
+    {
         "role": "user",
         "content": [
             {"type": "text", "text": "This is the previous image"},

@@ -1,1 +1,1 @@
-
+from termux import setup_TTS, take_snapshot, read_description 

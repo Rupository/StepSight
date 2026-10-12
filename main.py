@@ -3,7 +3,6 @@ from vlm import get_desc
 
 def stepsight_flow():
     take_snapshot()
-    read_description("Scene captured.")
     desc = get_desc()
     read_description(desc)
 

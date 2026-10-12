@@ -15,9 +15,13 @@ subprocess.Popen(
 def take_snapshot():
     subprocess.run(['cp', 'curr_snap.jpeg', 'prev_snap.jpeg'])
     subprocess.run(['termux-camera-photo', '-c', '0', 'curr_snap.jpeg'])
+    print()
+    print("Took snapshot")
 
 def read_description(desc:str):
     with open(TTS_file, 'w') as f:
         f.write(desc + '\n')
+    print
+    print(desc)
 
 read_description("Setting up speech engine.")

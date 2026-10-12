@@ -44,6 +44,7 @@ def get_desc():
     full_output = str(generated_texts[0]).partition(delimeter)[2]
 
     output = full_output[:len(full_output) - len('<end_of_utterance>')]
-    return output
 
-print(get_desc())
+    print()
+    print(output)
+    return output

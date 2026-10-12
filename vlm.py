@@ -10,6 +10,7 @@ model = AutoModelForImageTextToText.from_pretrained(
 
 messages = [
     {
+        "role": "system", "content": system_prompt},
         "role": "user",
         "content": [
             {"type": "text", "text": "This is the previous image"},

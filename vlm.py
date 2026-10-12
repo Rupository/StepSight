@@ -2,13 +2,14 @@ from transformers import AutoProcessor, AutoModelForImageTextToText
 from transformers.image_utils import load_image
 import torch
 
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cpu"
 
-processor = AutoProcessor.from_pretrained("HuggingFaceTB/SmolVLM-256M-Instruct")
-model = AutoModelForImageTextToText.from_pretrained("HuggingFaceTB/SmolVLM-256M-Instruct",
-                                                dtype=torch.float16,
-                                                low_cpu_mem_usage=True,
-                                                _attn_implementation="flash_attention_2" if DEVICE == "cuda" else "eager").to(DEVICE)
+model_name = "HuggingFaceTB/SmolVLM-256M-Instruct"
+processor = AutoProcessor.from_pretrained(model_name)
+model = AutoModelForImageTextToText.from_pretrained(model_name,
+                                                dtype=torch.float32,
+                                                #low_cpu_mem_usage=True,
+                                                _attn_implementation="eager").to(DEVICE)
 
 
 
@@ -38,7 +39,7 @@ def get_desc():
 
     print("Inputs passed")
 
-    generated_ids = model.generate(**inputs, max_new_tokens=100)
+    generated_ids = model.generate(**inputs, max_new_tokens=64)
     generated_texts = processor.batch_decode(
         generated_ids,
         #skip_special_tokens=True,

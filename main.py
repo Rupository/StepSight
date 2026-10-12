@@ -1,5 +1,5 @@
-from termux import take_snapshot, read_description 
-from vlm import get_desc
+from setup import take_snapshot, read_description 
+from inference import get_desc
 
 def stepsight_flow():
     take_snapshot()

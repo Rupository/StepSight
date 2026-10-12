@@ -219,3 +219,4 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+SmolVLM-256M-Instruct-Q8_0.gguf

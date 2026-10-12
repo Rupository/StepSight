@@ -4,11 +4,6 @@ import torch
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-with open("vlm_prompt.md", "r") as file:
-    vlm_prompt = file.read()
-
-#print(vlm_prompt)
-
 processor = AutoProcessor.from_pretrained("HuggingFaceTB/SmolVLM-256M-Instruct")
 model = AutoModelForImageTextToText.from_pretrained("HuggingFaceTB/SmolVLM-256M-Instruct",
                                                 dtype=torch.bfloat16,

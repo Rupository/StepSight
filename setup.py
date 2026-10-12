@@ -14,7 +14,7 @@ def initialize():
     )
 
     subprocess.Popen(
-        f'llama serve -hf ggml-org/SmolVLM-256M-Instruct-GGUF --threads 4 --port 9931',
+        f'llama serve -hf ggml-org/SmolVLM-256M-Instruct-GGUF --port 9931',
         shell=True
     )
     time.sleep(30)

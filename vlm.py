@@ -36,7 +36,14 @@ def get_desc():
     generated_ids = model.generate(**inputs, max_new_tokens=500)
     generated_texts = processor.batch_decode(
         generated_ids,
-        skip_special_tokens=True,
+        #skip_special_tokens=True,
     )
 
-    return str(generated_texts[0]).partition('Assistant:')[2]
+    
+    delimeter = '<end_of_utterance>\nAssistant:'
+    full_output = str(generated_texts[0]).partition(delimeter)[2]
+
+    output = full_output[:len(full_output) - len('<end_of_utterance>')]
+    return output
+
+print(get_desc())

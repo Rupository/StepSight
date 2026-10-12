@@ -23,4 +23,9 @@ subprocess.Popen(
     shell=True
 )
 
-read_description("Setting up speech engine.")
+subprocess.Popen(
+    f'llama serve -hf ggml-org/SmolVLM-256M-Instruct-GGUF',
+    shell=True
+)
+
+read_description("Setup Complete.")

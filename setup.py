@@ -13,7 +13,7 @@ def initialize():
     )
 
     subprocess.Popen(
-        f'llama serve -hf ggml-org/SmolVLM-256M-Instruct-GGUF',
+        f'llama serve -hf ggml-org/SmolVLM-256M-Instruct-GGUF --port 9931',
         shell=True
     )
 

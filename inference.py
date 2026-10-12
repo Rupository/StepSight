@@ -1,7 +1,7 @@
 import openai
 from datauri import DataURI
 
-client = openai.OpenAI(base_url="http://localhost:8080/v1", api_key="no-key-required")
+client = openai.OpenAI(base_url="http://localhost:9931/v1", api_key="no-key-required")
 
 
 def get_desc():

@@ -36,7 +36,6 @@ def initialize():
     read_description("Setup Complete.")
 
 def take_snapshot():
-    subprocess.run(['cp', 'curr_snap.jpeg', 'prev_snap.jpeg'])
     subprocess.run(['termux-camera-photo', '-c', '0', 'curr_snap.jpeg'])
     print()
     print("Took snapshot.")

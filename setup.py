@@ -15,7 +15,7 @@ def initialize():
     )
 
     subprocess.Popen(
-        f'llama serve -hf Mungert/SmolVLM-256M-Instruct-GGUF:Q4_0 --threads 4 --port 9931',
+        f'llama serve -hf introvoyz041/SmolVLM-256M-Instruct-Q4_0-GGUF --threads 4 --port 9931',
         shell=True
     )
     while True:

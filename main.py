@@ -4,7 +4,7 @@ from inference import get_desc
 def stepsight_flow():
     take_snapshot()
     desc = get_desc()
-    if desc != 'No changes detected.':
+    if desc != 'No changes observed.':
         read_description(desc)
 
 if __name__ == "__main__":

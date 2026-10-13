@@ -1,29 +1,36 @@
 import openai
-import numpy as np
-from sewar.full_ref import mse
 from PIL import Image
 from datauri import DataURI
+from ssim import compute_ssim
 
 client = openai.OpenAI(base_url="http://localhost:9931/v1", api_key="no-key-required")
 
 
 def get_desc():
     curr_snap_uri = str(DataURI.from_file('curr_snap.jpeg'))
+    curr_snap_img = Image('curr_snap.jpeg')
+    prev_snap_img = Image('prev_snap.jpeg')
 
-    completion = client.chat.completions.create(
-        model="local-model",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    { "type": "image_url", "image_url": { "url": curr_snap_uri } },
-                    {"type": "text", "text": "In one short sentence, describe the environment of this image."},
-                ]
-            }
-        ],
-    )
+    ssim_score = compute_ssim(curr_snap_img, prev_snap_img)
 
-    output = completion.choices[0].message.content
+    if ssim_score < 0.8:
+
+        completion = client.chat.completions.create(
+            model="local-model",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        { "type": "image_url", "image_url": { "url": curr_snap_uri } },
+                        {"type": "text", "text": "In one short sentence, describe the environment of this image."},
+                    ]
+                }
+            ],
+        )
+
+        output = completion.choices[0].message.content
+
+    else:
+        output = "No changes observed."
+
     return(output)
-
-#get_desc()

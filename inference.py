@@ -8,8 +8,8 @@ client = openai.OpenAI(base_url="http://localhost:9931/v1", api_key="no-key-requ
 
 def get_desc():
     curr_snap_uri = str(DataURI.from_file('curr_snap.jpeg'))
-    curr_snap_img = Image('curr_snap.jpeg')
-    prev_snap_img = Image('prev_snap.jpeg')
+    curr_snap_img = Image.open('curr_snap.jpeg')
+    prev_snap_img = Image.open('prev_snap.jpeg')
 
     ssim_score = compute_ssim(curr_snap_img, prev_snap_img)
 

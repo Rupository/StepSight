@@ -12,7 +12,7 @@ def get_desc():
     curr_snap = np.asarray(Image.open("curr_snap.jpeg"))
     prev_snap = np.asarray(Image.open("prev_snap.jpeg"))
 
-    if ssim(curr_snap, prev_snap)[0] < 0.85:
+    if True:#ssim(curr_snap, prev_snap)[0] < 0.85:
 
         completion = client.chat.completions.create(
             model="local-model",

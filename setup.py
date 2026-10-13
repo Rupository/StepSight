@@ -24,7 +24,7 @@ def initialize():
 
     subprocess.Popen(
         #f'llama serve -m SmolVLM-256M-Instruct-q4_0.gguf --mmproj SmolVLM-256M-Instruct-q8_0.mmproj --threads 4 --image-max-tokens 1024 --port 9931',
-        'llama serve -hf ggml-org/SmolVLM-500M-Instruct-GGUF:Q8_0 --threads 4 --image-max-tokens 1024 --port 9931',
+        'llama serve -hf ggml-org/SmolVLM-256-Instruct-GGUF:Q8_0 --threads 4 --image-max-tokens 1024 --port 9931',
         shell=True
     )
     while True:

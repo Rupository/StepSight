@@ -17,7 +17,7 @@ def get_desc():
                 "role": "user",
                 "content": [
                     { "type": "image_url", "image_url": { "url": curr_snap_uri } },
-                    {"type": "text", "text": "Describe the environment and entities inside this image in one sentence."},
+                    {"type": "text", "text": "In one sentence, describe the environment and entities inside this image."},
                 ]
             }
         ],

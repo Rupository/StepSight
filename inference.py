@@ -1,32 +1,39 @@
 import openai
+import numpy as np
+from sewar.full_ref import ssim
+from PIL import Image
 from datauri import DataURI
 
 client = openai.OpenAI(base_url="http://localhost:9931/v1", api_key="no-key-required")
 
 
 def get_desc():
-    prev_snap = str(DataURI.from_file('prev_snap.jpeg'))
-    curr_snap = str(DataURI.from_file('curr_snap.jpeg'))
+    curr_snap_uri = str(DataURI.from_file('curr_snap.jpeg'))
+    curr_snap = np.asarray(Image.open("curr_snap.jpeg"))
+    prev_snap = np.asarray(Image.open("prev_snap.jpeg"))
 
-    completion = client.chat.completions.create(
-        model="local-model",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    { "type": "text", "text": "This is the previous environment:" },
-                    { "type": "image_url", "image_url": { "url": prev_snap } },
-                    { "type": "text", "text": "This is the current environment:" },
-                    { "type": "image_url", "image_url": { "url": curr_snap } },
-                    {"type": "text", "text": "Describe the current environment in one sentence. If the current environment"
-                    " is similar to the previous environment, DO NOT describe the current environment."},
-                ]
-            }
-        ],
-    )
+    if ssim(curr_snap, prev_snap)[0] < 0.85:
 
-    print()
-    print(completion.choices[0].message.content)
-    return completion.choices[0].message.content
+        completion = client.chat.completions.create(
+            model="local-model",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        { "type": "text", "text": "This is the current environment:" },
+                        { "type": "image_url", "image_url": { "url": curr_snap_uri } },
+                        {"type": "text", "text": "Describe the current environment in one sentence."},
+                    ]
+                }
+            ],
+        )
 
-#get_desc()
+        output = completion.choices[0].message.content
+
+    else:
+        output = "No changes detected."
+
+    print(output)
+    return(output)
+
+get_desc()

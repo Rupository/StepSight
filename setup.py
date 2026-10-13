@@ -14,6 +14,9 @@ def initialize():
         shell=True
     )
 
+    subprocess.run(['pkill', '-f', 'llama serve'])
+    time.sleep(1)
+
     subprocess.Popen(
         f'llama serve -m SmolVLM-256M-Instruct-q4_0.gguf --mmproj SmolVLM-256M-Instruct-q8_0.mmproj --threads 4 --port 9931',
         shell=True

@@ -1,6 +1,7 @@
 import os
 import time
 import subprocess
+import urllib.request
 
 TTS_file = os.path.expanduser("~/.tts")
 
@@ -14,10 +15,15 @@ def initialize():
     )
 
     subprocess.Popen(
-        f'llama serve -hf ggml-org/SmolVLM-256M-Instruct-GGUF --port 9931',
+        f'llama serve -hf ggml-org/SmolVLM-256M-Instruct-GGUF --threads 4 --port 9931',
         shell=True
     )
-    time.sleep(30)
+    while True:
+        try:
+            if urllib.request.urlopen(f'http://127.0.0.1:9931/health', timeout=1).status == 200:
+                break
+        except Exception:
+            time.sleep(1)
 
     read_description("Setup Complete.")
 

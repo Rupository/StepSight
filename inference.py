@@ -20,7 +20,6 @@ def get_desc():
                 {
                     "role": "user",
                     "content": [
-                        { "type": "text", "text": "This is the current environment:" },
                         { "type": "image_url", "image_url": { "url": curr_snap_uri } },
                         {"type": "text", "text": "Describe the current environment in one sentence."},
                     ]
@@ -36,4 +35,4 @@ def get_desc():
     print(output)
     return(output)
 
-get_desc()
+#get_desc()

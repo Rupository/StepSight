@@ -6,8 +6,13 @@ import urllib.request
 TTS_file = os.path.expanduser("~/.tts")
 
 def initialize():
-    if not os.path.exists(TTS_file):
-        os.mkfifo(TTS_file)
+    subprocess.run(['pkill', '-f', 'termux-tts-speak'], capture_output=True)
+    subprocess.run(['pkill', '-f', 'cat ~/.tts'], capture_output=True)
+    time.sleep(0.5)
+
+    if os.path.exists(TTS_file):
+        os.remove(TTS_file)
+    os.mkfifo(TTS_file)
 
     subprocess.Popen(
         f'while true; do cat "{TTS_file}"; done | termux-tts-speak',

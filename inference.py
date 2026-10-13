@@ -13,7 +13,7 @@ def get_desc():
 
     ssim_score = compute_ssim(curr_snap_img, prev_snap_img)
 
-    if ssim_score < 0.8:
+    if ssim_score < 0:
 
         completion = client.chat.completions.create(
             model="local-model",
@@ -22,10 +22,11 @@ def get_desc():
                     "role": "user",
                     "content": [
                         { "type": "image_url", "image_url": { "url": curr_snap_uri } },
-                        {"type": "text", "text": "In one short sentence, describe the environment of this image."},
+                        {"type": "text", "text": "In one short sentence, describe the environment captured in the image."},
                     ]
                 }
             ],
+            temperature = 0,
         )
 
         output = completion.choices[0].message.content

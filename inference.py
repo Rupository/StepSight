@@ -13,7 +13,7 @@ def get_desc():
 
     ssim_score = compute_ssim(curr_snap_img, prev_snap_img)
 
-    if ssim_score < 0:
+    if ssim_score < 0.5:
 
         completion = client.chat.completions.create(
             model="local-model",
